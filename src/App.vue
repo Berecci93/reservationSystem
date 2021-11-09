@@ -1,28 +1,34 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <v-app>
+        <v-main>
+            <v-container>
+                <v-row class="justify-space-around">
+                    <v-date-picker v-model="date" min="2016-06-15" max="2023-03-20"></v-date-picker>
+                    <Timeline :config="config" v-if="date"></Timeline>
+                    <Form v-if="date"></Form>
+                </v-row>
+            </v-container>
+        </v-main>
+    </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Timeline from './components/Timeline.vue';
+import Form from './components/Form.vue';
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+    data: () => ({
+        date: null,
+        config: {
+            start: 8,
+            end: 16,
+            sesja: 45,
+            przerwa: 15
+        },
+    }),
+    components: {
+        Timeline,
+        Form
+    }
+};
 </script>
-
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
