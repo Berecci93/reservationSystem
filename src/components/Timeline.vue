@@ -4,7 +4,7 @@
             <v-card>
                 <div class="py-1 pl-4 pr-2">
                     {{ item.start.hour + ":" + item.start.minutes + item.end.hour + ":" + item.end.minutes }}
-                    <v-btn icon class="ml-1">
+                    <v-btn icon class="ml-1" @click="$emit('hourChosen')">
                         <v-icon color="primary">mdi-check-circle</v-icon>
                     </v-btn>
                 </div>
