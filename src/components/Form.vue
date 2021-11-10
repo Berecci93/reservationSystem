@@ -37,6 +37,7 @@
                 </v-col>
             </v-row>
             <v-btn @click="clear">clear</v-btn>
+            <v-btn @click="submit" color="primary" :disabled="!valid">submit</v-btn>
         </v-container>
     </v-form>
 </template>
@@ -67,10 +68,11 @@ export default {
             this.lastname = ''
             this.phoneNumber = ''
             this.email = ''
-            this.select = null
-            this.checkbox = null
             this.$refs.observer.reset()
         },
+        submit() {
+            console.log(this.firstname, this.lastname, this.phoneNumber, this.email)
+        }
     }
 }
 </script>
