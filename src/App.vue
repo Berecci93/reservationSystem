@@ -1,8 +1,11 @@
 <template>
     <v-app>
         <v-main>
+            <v-app-bar elevation="2" color="primary">
+                <v-btn @click="aboutNumber++">About</v-btn>
+            </v-app-bar>
             <v-container>
-                <v-col>
+                <v-col align="center" justify="center" class="column">
                     <v-stepper v-model="stepNumber">
                         <v-stepper-header>
                             <v-stepper-step :complete="stepNumber > 1" step="1">Name of step 1</v-stepper-step>
@@ -17,6 +20,7 @@
                         </v-stepper-header>
                         <v-stepper-items>
                             <v-stepper-content step="1">
+                                <!-- date przechowuje info z wybrana data po @input -->
                                 <v-date-picker
                                     v-model="date"
                                     @input="stepNumber = 2"
@@ -28,15 +32,34 @@
                                 <Timeline :config="config" v-if="date" @hourChosen="stepNumber = 3"></Timeline>
                             </v-stepper-content>
                             <v-stepper-content step="3">
-                                <Form v-if="date"></Form>
+                                <Form v-if="date" @submitFormData="formData = $event"></Form>
                             </v-stepper-content>
                         </v-stepper-items>
                     </v-stepper>
+                    <v-col>
+                        <img src=".\assets\vue logo.png" />
+                    </v-col>
+                </v-col>
+                <v-col>
+                    <v-card v-if="aboutNumber > 0">
+                        <v-card-text>
+                            <b>About</b>
+                            <ul>
+                                <li>
+                                    In association with:
+                                    <a href="https://hiijac.com/">HIIJAC</a>
+                                    I thank him all my knowledge and skills
+                                </li>
+                                <li>You can book any termin you want</li>
+                            </ul>
+                        </v-card-text>
+                    </v-card>
                 </v-col>
             </v-container>
         </v-main>
     </v-app>
 </template>
+
 
 <script>
 import Timeline from './components/Timeline.vue';
@@ -51,7 +74,10 @@ export default {
             sesja: 45,
             przerwa: 15
         },
-        stepNumber: 1
+        stepNumber: 1,
+        aboutNumber: 0,
+        formData: null,
+        check: "asdasd"
     }),
     components: {
         Timeline,
@@ -59,3 +85,9 @@ export default {
     }
 };
 </script>
+<style lang="scss" scoped>
+.column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+</style>
