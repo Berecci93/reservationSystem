@@ -29,16 +29,30 @@
                                 ></v-date-picker>
                             </v-stepper-content>
                             <v-stepper-content step="2">
-                                <Timeline :config="config" v-if="date" @hourChosen="stepNumber = 3"></Timeline>
+                                <Timeline
+                                    :config="config"
+                                    v-if="date"
+                                    @hourChosen="timelineData = $event; stepNumber = 3"
+                                ></Timeline>
                             </v-stepper-content>
                             <v-stepper-content step="3">
-                                <Form v-if="date" @submitFormData="formData = $event"></Form>
+                                <Form
+                                    v-if="date"
+                                    @submitFormData="formData = $event; dialog = true"
+                                ></Form>
                             </v-stepper-content>
                         </v-stepper-items>
                     </v-stepper>
                     <v-col>
-                        <img src=".\assets\vue logo.png" />
+                        <div class="logo">
+                            <img src=".\assets\vue logo.png" />
+                        </div>
                     </v-col>
+                </v-col>
+                <v-col>
+                    <v-dialog v-model="dialog" max-width="290">
+                        <v-card>{{ date }}{{ formData }}{{ timelineData }}</v-card>
+                    </v-dialog>
                 </v-col>
                 <v-col>
                     <v-card v-if="aboutNumber > 0">
@@ -68,6 +82,7 @@ import Form from './components/Form.vue';
 export default {
     data: () => ({
         date: null,
+        dialog: false,
         config: {
             start: 8,
             end: 16,
@@ -77,7 +92,7 @@ export default {
         stepNumber: 1,
         aboutNumber: 0,
         formData: null,
-        check: "asdasd"
+        timelineData: null,
     }),
     components: {
         Timeline,
@@ -89,5 +104,8 @@ export default {
 .column {
     display: grid;
     grid-template-columns: 1fr 1fr;
+}
+.logo {
+    margin: 6rem 0 0 0;
 }
 </style>

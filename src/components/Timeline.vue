@@ -3,8 +3,12 @@
         <v-timeline-item v-for="(item, i) in liczbaSesji" :key="i">
             <v-card>
                 <div class="py-1 pl-4 pr-2">
-                    {{ item.start.hour + ":" + item.start.minutes + item.end.hour + ":" + item.end.minutes }}
-                    <v-btn icon class="ml-1" @click="$emit('hourChosen')">
+                    {{ "od " + item.start.hour + ":" + item.start.minutes + " do " + item.end.hour + ":" + item.end.minutes }}
+                    <v-btn
+                        icon
+                        class="ml-1"
+                        @click="$emit('hourChosen', { startHour: item.start.hour, startMinute: item.start.minutes, endHour: item.end.hour, endMinute: item.end.minutes })"
+                    >
                         <v-icon color="primary">mdi-check-circle</v-icon>
                     </v-btn>
                 </div>
@@ -37,11 +41,11 @@ export default {
                 let endOfSession = i + czasSesji
                 this.liczbaSesji.push({
                     start: {
-                        hour: "od " + this.format(Math.floor(i / 60)),
+                        hour: this.format(Math.floor(i / 60)),
                         minutes: this.format(i % 60)
                     },
                     end: {
-                        hour: " do " + this.format(Math.floor(endOfSession / 60)),
+                        hour: this.format(Math.floor(endOfSession / 60)),
                         minutes: this.format(endOfSession % 60)
                     }
                 })
@@ -51,7 +55,7 @@ export default {
     },
     created() {
         this.policz(this.config.sesja, this.config.przerwa, this.config.start, this.config.end)
-    }
+    },
 }
 </script>
 

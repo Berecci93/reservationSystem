@@ -77,6 +77,7 @@ export default {
             this.formData.email = ''
         },
         submit() {
+            this.dialog = true
             this.$emit("submitFormData", { ...this.formData })//spread syntax
         }
     }
