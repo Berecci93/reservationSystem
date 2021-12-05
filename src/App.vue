@@ -37,6 +37,7 @@
                             </v-stepper-content>
                             <v-stepper-content step="3">
                                 <Form
+                                    ref="form"
                                     v-if="date"
                                     @submitFormData="formData = $event; dialog = true"
                                 ></Form>
@@ -50,8 +51,40 @@
                     </v-col>
                 </v-col>
                 <v-col>
-                    <v-dialog v-model="dialog" max-width="290">
-                        <v-card>{{ date }}{{ formData }}{{ timelineData }}</v-card>
+                    <v-dialog v-model="dialog" max-width="400">
+                        <v-card>
+                            <v-simple-table>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            {{ "picked date" }}
+                                            <br />
+                                            {{ "hour" }}
+                                            <br />
+                                            {{ "name" }}
+                                            <br />
+                                            {{ "email" }}
+                                            <br />
+                                            {{ "phone number" }}
+                                        </td>
+                                        <td>
+                                            {{ date }}
+                                            <br />
+                                            {{ timelineData.startHour + ":" }}{{ timelineData.startMinute }}{{ " to " + timelineData.endHour + ":" }}{{ timelineData.endMinute }}
+                                            <br />
+                                            {{ formData.lastname }}
+                                            {{ formData.firstname }}
+                                            <br />
+                                            {{ formData.email }}
+                                            <br />
+                                            {{ formData.phoneNumber }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </v-simple-table>
+                        </v-card>
+                        <v-btn>Agree</v-btn>
+                        <v-btn @click="dialog = false; $refs.form.clear(); stepNumber = 1">Disagree</v-btn>
                     </v-dialog>
                 </v-col>
                 <v-col>
@@ -91,8 +124,8 @@ export default {
         },
         stepNumber: 1,
         aboutNumber: 0,
-        formData: null,
-        timelineData: null,
+        formData: {},
+        timelineData: {},
     }),
     components: {
         Timeline,

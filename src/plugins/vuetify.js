@@ -7,12 +7,12 @@ Vue.use(Vuetify);
 
 export default new Vuetify({
   theme: {
-      options: {
-        customProperties: true,
-      },
+    options: {
+      customProperties: true,
+    },
     themes: {
       light: {
-        primary: '#007BFF',
+        primary: '#BB5060',
         secondary: '#424242',
         accent: '#82B1FF',
         error: '#FF5252',
@@ -22,8 +22,8 @@ export default new Vuetify({
       },
     },
   },
-    lang: {
-      locales: { pl },
-      current: 'pl',
-    },
+  lang: {
+    locales: { pl },
+    current: 'pl',
+  },
 });

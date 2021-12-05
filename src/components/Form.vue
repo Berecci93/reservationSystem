@@ -1,5 +1,5 @@
 <template>
-    <v-form v-model="valid">
+    <v-form v-model="valid" ref="vform">
         <v-container>
             <v-row>
                 <v-col cols="12" md="4">
@@ -56,25 +56,24 @@ export default {
             lastname: '',
             email: '',
         },
+        //w walidacji sprawdzic czy element istnieje && aby zadzialal refs.form.reset()
         nameRules: [
             v => !!v || 'Name is required',
-            v => v.length <= 20 || 'Name must be less than 20 characters',
+            v => !!v && v.length <= 20 || 'Name must be less than 20 characters',
         ],
         phoneRules: [
             v => !!v || "Number is required",
-            v => v.length <= 12 || "Number must be less than 12 characters",
+            v => !!v && v.length <= 12 || "Number must be less than 12 characters",
         ],
         emailRules: [
             v => !!v || 'E-mail is required',
-            v => /.+@.+/.test(v) || 'E-mail must be valid',
+            v => !!v && /.+@.+/.test(v) || 'E-mail must be valid',
         ],
     }),
     methods: {
         clear() {
-            this.formData.firstname = ''
-            this.formData.lastname = ''
-            this.formData.phoneNumber = ''
-            this.formData.email = ''
+            this.$refs.vform.reset()
+            this.$refs.vform.resetValidation()
         },
         submit() {
             this.dialog = true
