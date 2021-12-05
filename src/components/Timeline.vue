@@ -1,6 +1,6 @@
 <template>
     <v-timeline dense>
-        <v-timeline-item v-for="(item, i) in liczbaSesji" :key="i">
+        <v-timeline-item v-for="(item, i) in filteredSessions" :key="i">
             <v-card>
                 <div class="py-1 pl-4 pr-2">
                     {{ "od " + item.start.hour + ":" + item.start.minutes + " do " + item.end.hour + ":" + item.end.minutes }}
@@ -22,11 +22,27 @@ export default {
     name: 'Timeline',
     data() {
         return {
-            liczbaSesji: [],
+            sessions: [],
         }
     },
     props: {
-        config: Object
+        config: Object,
+        reserved: Array,
+        chosenDay: String,
+    },
+    computed: {
+        filteredSessions() {
+            return this.sessions.filter(session => {
+                return !this.chosenDayReservations.some(reservation => {
+                    return reservation.startHour == session.start.hour
+                })
+            })
+        },
+        chosenDayReservations() {
+            return this.reserved
+                .filter(x => x.day == this.chosenDay)
+                .map(x => x.hour)
+        }
     },
     methods: {
         format(number) {
@@ -39,7 +55,7 @@ export default {
 
             for (let i = startMin; i + czasSesji <= endMin; i += czasSesji + przerwa) {
                 let endOfSession = i + czasSesji
-                this.liczbaSesji.push({
+                this.sessions.push({
                     start: {
                         hour: this.format(Math.floor(i / 60)),
                         minutes: this.format(i % 60)
@@ -50,7 +66,7 @@ export default {
                     }
                 })
             }
-            return this.liczbaSesji
+            return this.sessions
         },
     },
     created() {

@@ -1,8 +1,8 @@
 <template>
     <v-app>
         <v-main>
-            <v-app-bar elevation="2" color="secondary">
-                <v-btn @click="aboutNumber++" color="accent">About</v-btn>
+            <v-app-bar elevation="2" color="primary">
+                <v-btn @click="aboutNumber++" color="secondary">About</v-btn>
             </v-app-bar>
             <v-container>
                 <v-col align="center" justify="center" class="column">
@@ -31,16 +31,14 @@
                             <v-stepper-content step="2">
                                 <Timeline
                                     :config="config"
+                                    :reserved="savedDates"
+                                    :chosenDay="date"
                                     v-if="date"
-                                    @hourChosen="timelineData = $event; stepNumber = 3"
+                                    @hourChosen="chosenHour = $event; stepNumber = 3"
                                 ></Timeline>
                             </v-stepper-content>
                             <v-stepper-content step="3">
-                                <Form
-                                    ref="form"
-                                    v-if="date"
-                                    @submitFormData="formData = $event; dialog = true"
-                                ></Form>
+                                <Form ref="form" v-if="date" @submitFormData="submitBtn($event)"></Form>
                             </v-stepper-content>
                         </v-stepper-items>
                     </v-stepper>
@@ -79,7 +77,7 @@
                                             <b>
                                                 {{ date }}
                                                 <br />
-                                                {{ timelineData.startHour + ":" }}{{ timelineData.startMinute }}{{ " to " + timelineData.endHour + ":" }}{{ timelineData.endMinute }}
+                                                {{ chosenHour.startHour + ":" }}{{ chosenHour.startMinute }}{{ " to " + chosenHour.endHour + ":" }}{{ chosenHour.endMinute }}
                                                 <br />
                                                 {{ formData.lastname }}
                                                 {{ formData.firstname }}
@@ -132,6 +130,7 @@ export default {
     data: () => ({
         date: null,
         dialog: false,
+        savedDates: [],
         config: {
             start: 8,
             end: 16,
@@ -141,11 +140,24 @@ export default {
         stepNumber: 1,
         aboutNumber: 0,
         formData: {},
-        timelineData: {},
+        chosenHour: {},
     }),
     components: {
         Timeline,
         Form
+    },
+    methods: {
+        submitBtn(event) {
+            //formData = $event; dialog = true
+            this.formData = event
+            this.dialog = true
+            this.savedDates.push({ day: this.date, hour: this.chosenHour })
+            localStorage.setItem("reserved", JSON.stringify(this.savedDates))
+        },
+    },
+    created() {
+        let storageString = localStorage.getItem("reserved")
+        this.savedDates = JSON.parse(storageString) || []
     }
 };
 </script>
