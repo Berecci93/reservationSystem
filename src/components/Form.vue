@@ -41,8 +41,8 @@
                     ></v-text-field>
                 </v-col>
             </v-row>
-            <v-btn @click="clear">clear</v-btn>
-            <v-btn @click="submit" color="primary" :disabled="!valid">submit</v-btn>
+            <v-btn @click="clear" color="secondary">clear</v-btn>
+            <v-btn @click="submit" color="accent" :disabled="!valid">submit</v-btn>
         </v-container>
     </v-form>
 </template>

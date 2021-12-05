@@ -1,8 +1,8 @@
 <template>
     <v-app>
         <v-main>
-            <v-app-bar elevation="2" color="primary">
-                <v-btn @click="aboutNumber++">About</v-btn>
+            <v-app-bar elevation="2" color="secondary">
+                <v-btn @click="aboutNumber++" color="accent">About</v-btn>
             </v-app-bar>
             <v-container>
                 <v-col align="center" justify="center" class="column">
@@ -54,37 +54,53 @@
                     <v-dialog v-model="dialog" max-width="400">
                         <v-card>
                             <v-simple-table>
+                                <thead>
+                                    <tr>
+                                        <th>Check your data</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
                                 <tbody>
                                     <tr>
                                         <td>
-                                            {{ "picked date" }}
-                                            <br />
-                                            {{ "hour" }}
-                                            <br />
-                                            {{ "name" }}
-                                            <br />
-                                            {{ "email" }}
-                                            <br />
-                                            {{ "phone number" }}
+                                            <i>
+                                                {{ "Picked date" }}
+                                                <br />
+                                                {{ "Hour" }}
+                                                <br />
+                                                {{ "Name" }}
+                                                <br />
+                                                {{ "Email" }}
+                                                <br />
+                                                {{ "Phone number" }}
+                                            </i>
                                         </td>
                                         <td>
-                                            {{ date }}
-                                            <br />
-                                            {{ timelineData.startHour + ":" }}{{ timelineData.startMinute }}{{ " to " + timelineData.endHour + ":" }}{{ timelineData.endMinute }}
-                                            <br />
-                                            {{ formData.lastname }}
-                                            {{ formData.firstname }}
-                                            <br />
-                                            {{ formData.email }}
-                                            <br />
-                                            {{ formData.phoneNumber }}
+                                            <b>
+                                                {{ date }}
+                                                <br />
+                                                {{ timelineData.startHour + ":" }}{{ timelineData.startMinute }}{{ " to " + timelineData.endHour + ":" }}{{ timelineData.endMinute }}
+                                                <br />
+                                                {{ formData.lastname }}
+                                                {{ formData.firstname }}
+                                                <br />
+                                                {{ formData.email }}
+                                                <br />
+                                                {{ formData.phoneNumber }}
+                                            </b>
                                         </td>
                                     </tr>
                                 </tbody>
                             </v-simple-table>
+                            <v-card-actions>
+                                <v-btn
+                                    color="error"
+                                    @click="dialog = false; $refs.form.clear(); stepNumber = 1"
+                                >Disagree</v-btn>
+                                <v-spacer></v-spacer>
+                                <v-btn color="primary">Agree</v-btn>
+                            </v-card-actions>
                         </v-card>
-                        <v-btn>Agree</v-btn>
-                        <v-btn @click="dialog = false; $refs.form.clear(); stepNumber = 1">Disagree</v-btn>
                     </v-dialog>
                 </v-col>
                 <v-col>
