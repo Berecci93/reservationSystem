@@ -14,6 +14,7 @@
                 </div>
             </v-card>
         </v-timeline-item>
+        <v-btn color="secondary" @click="$emit('chosenAllDay')">Get all day</v-btn>
     </v-timeline>
 </template>
 

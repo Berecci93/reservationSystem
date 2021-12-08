@@ -1,8 +1,8 @@
-<template>
+<template >
     <v-app>
         <v-main>
             <v-app-bar elevation="2" color="primary">
-                <v-btn @click="aboutNumber++" color="secondary">About</v-btn>
+                <v-btn @click="demoNumber++" color="secondary">Demo options</v-btn>
             </v-app-bar>
             <v-container>
                 <v-col align="center" justify="center" class="column">
@@ -23,9 +23,8 @@
                                 <!-- date przechowuje info z wybrana data po @input -->
                                 <v-date-picker
                                     v-model="date"
+                                    v-bind="newdate"
                                     @input="stepNumber = 2"
-                                    min="2016-06-15"
-                                    max="2023-03-20"
                                 ></v-date-picker>
                             </v-stepper-content>
                             <v-stepper-content step="2">
@@ -91,17 +90,23 @@
                                 </tbody>
                             </v-simple-table>
                             <v-card-actions>
-                                <v-btn
-                                    color="error"
-                                    @click="dialog = false; $refs.form.clear(); stepNumber = 1"
-                                >Disagree</v-btn>
                                 <v-spacer></v-spacer>
-                                <v-btn color="primary">Agree</v-btn>
+                                <v-btn
+                                    color="success"
+                                    @click="dialog = false; $refs.form.clear(); stepNumber = 1"
+                                >Ok</v-btn>
+                                <!-- <v-btn color="primary">Agree</v-btn> -->
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
                 </v-col>
                 <v-col>
+                    <v-card v-if="demoNumber > 0">
+                        <v-card-actions>
+                            <v-btn color="secondary" @click="clearStorage">Clear localStorage</v-btn>
+                            <v-btn color="secondary" @click="aboutNumber++">About</v-btn>
+                        </v-card-actions>
+                    </v-card>
                     <v-card v-if="aboutNumber > 0">
                         <v-card-text>
                             <b>About</b>
@@ -111,7 +116,6 @@
                                     <a href="https://hiijac.com/">HIIJAC</a>
                                     I thank him all my knowledge and skills
                                 </li>
-                                <li>You can book any termin you want</li>
                             </ul>
                         </v-card-text>
                     </v-card>
@@ -133,11 +137,13 @@ export default {
         savedDates: [],
         config: {
             start: 8,
-            end: 16,
-            sesja: 45,
+            end: 20,
+            sesja: 60,
             przerwa: 15
         },
         stepNumber: 1,
+        newdate: { min: "" },
+        demoNumber: 0,
         aboutNumber: 0,
         formData: {},
         chosenHour: {},
@@ -145,6 +151,13 @@ export default {
     components: {
         Timeline,
         Form
+    },
+    computed: {
+        getDate() {
+            return this.newdate.min = new Date().toISOString().substr(0, 10)
+
+
+        }
     },
     methods: {
         submitBtn(event) {
@@ -154,6 +167,10 @@ export default {
             this.savedDates.push({ day: this.date, hour: this.chosenHour })
             localStorage.setItem("reserved", JSON.stringify(this.savedDates))
         },
+        clearStorage() {
+            localStorage.clear()
+        },
+
     },
     created() {
         let storageString = localStorage.getItem("reserved")

@@ -42,7 +42,7 @@
                 </v-col>
             </v-row>
             <v-btn @click="clear" color="secondary">clear</v-btn>
-            <v-btn @click="submit" color="accent" :disabled="!valid">submit</v-btn>
+            <v-btn @click="submit" color="success" :disabled="!valid">submit</v-btn>
         </v-container>
     </v-form>
 </template>
