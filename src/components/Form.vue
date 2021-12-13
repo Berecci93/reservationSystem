@@ -2,7 +2,7 @@
     <v-form v-model="valid" ref="vform">
         <v-container>
             <v-row>
-                <v-col cols="12" md="4">
+                <v-col>
                     <v-text-field
                         v-model="formData.firstname"
                         :rules="nameRules"
@@ -10,9 +10,7 @@
                         label="First name"
                         required
                     ></v-text-field>
-                </v-col>
 
-                <v-col cols="12" md="4">
                     <v-text-field
                         v-model="formData.lastname"
                         :rules="nameRules"
@@ -20,8 +18,7 @@
                         label="Last name"
                         required
                     ></v-text-field>
-                </v-col>
-                <v-col cols="12" md="4">
+
                     <v-text-field
                         v-model="formData.phoneNumber"
                         :rules="phoneRules"
@@ -30,9 +27,7 @@
                         label="Phone Number"
                         required
                     ></v-text-field>
-                </v-col>
 
-                <v-col cols="12" md="4">
                     <v-text-field
                         v-model="formData.email"
                         :rules="emailRules"

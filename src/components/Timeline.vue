@@ -6,15 +6,16 @@
                     {{ "od " + item.start.hour + ":" + item.start.minutes + " do " + item.end.hour + ":" + item.end.minutes }}
                     <v-btn
                         icon
+                        v-bind:class="{ active: item.chosen }"
                         class="ml-1"
-                        @click="$emit('hourChosen', { startHour: item.start.hour, startMinute: item.start.minutes, endHour: item.end.hour, endMinute: item.end.minutes })"
+                        @click="item.chosen = !item.chosen"
                     >
                         <v-icon color="primary">mdi-check-circle</v-icon>
                     </v-btn>
                 </div>
             </v-card>
         </v-timeline-item>
-        <v-btn color="secondary" @click="$emit('chosenAllDay')">Get all day</v-btn>
+        <v-btn color="secondary" @click="$emit('hourChosen', filteredChosenSessions)">emit</v-btn>
     </v-timeline>
 </template>
 
@@ -43,6 +44,9 @@ export default {
             return this.reserved
                 .filter(x => x.day == this.chosenDay)
                 .map(x => x.hour)
+        },
+        filteredChosenSessions() {
+            return this.sessions.filter(x => x.chosen)
         }
     },
     methods: {
@@ -59,12 +63,13 @@ export default {
                 this.sessions.push({
                     start: {
                         hour: this.format(Math.floor(i / 60)),
-                        minutes: this.format(i % 60)
+                        minutes: this.format(i % 60),
                     },
                     end: {
                         hour: this.format(Math.floor(endOfSession / 60)),
                         minutes: this.format(endOfSession % 60)
-                    }
+                    },
+                    chosen: false
                 })
             }
             return this.sessions
@@ -73,8 +78,12 @@ export default {
     created() {
         this.policz(this.config.sesja, this.config.przerwa, this.config.start, this.config.end)
     },
+
 }
 </script>
 
 <style lang="scss" scoped>
+.active {
+    border: 1px solid var(--v-accent-lighten2);
+}
 </style>
