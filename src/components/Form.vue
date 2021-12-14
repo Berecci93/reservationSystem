@@ -6,7 +6,7 @@
                     <v-text-field
                         v-model="formData.firstname"
                         :rules="nameRules"
-                        :counter="20"
+                        :counter="50"
                         label="First name"
                         required
                     ></v-text-field>
@@ -14,7 +14,7 @@
                     <v-text-field
                         v-model="formData.lastname"
                         :rules="nameRules"
-                        :counter="20"
+                        :counter="50"
                         label="Last name"
                         required
                     ></v-text-field>
@@ -34,6 +34,12 @@
                         label="E-mail"
                         required
                     ></v-text-field>
+                    <v-textarea
+                        v-model="formData.userComment"
+                        label="Do you want to tell us something? Leave you comment here"
+                        name="input-7-1"
+                        solo
+                    ></v-textarea>
                 </v-col>
             </v-row>
             <v-btn @click="clear" color="secondary">clear</v-btn>
@@ -50,11 +56,12 @@ export default {
             firstname: '',
             lastname: '',
             email: '',
+            userComment: '',
         },
         //w walidacji sprawdzic czy element istnieje && aby zadzialal refs.form.reset()
         nameRules: [
             v => !!v || 'Name is required',
-            v => !!v && v.length <= 20 || 'Name must be less than 20 characters',
+            v => !!v && v.length <= 50 || 'Name must be less than 50 characters',
         ],
         phoneRules: [
             v => !!v || "Number is required",

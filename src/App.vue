@@ -4,9 +4,27 @@
             <!-- <v-app-bar elevation="2" color="primary">
 
             </v-app-bar>-->
-            <v-btn @click="demoNumber++" color="primary" fab left bottom fixed>
-                <v-icon>mdi-cog</v-icon>
-            </v-btn>
+            <v-menu offset-y :close-on-content-click="closeOnContentClick">
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                        @click="demoNumber = !demoNumber"
+                        color="primary"
+                        fab
+                        left
+                        bottom
+                        fixed
+                        dark
+                        v-bind="attrs"
+                        v-on="on"
+                    >
+                        <v-icon>mdi-cog</v-icon>
+                    </v-btn>
+                </template>
+                <v-list>
+                    <v-list-item @click="clearStorage">Clear localStorage</v-list-item>
+                    <v-list-item @click="aboutNumber = !aboutNumber">About</v-list-item>
+                </v-list>
+            </v-menu>
             <v-container>
                 <v-row>
                     <v-col>
@@ -21,15 +39,15 @@
                     <v-col align="center" justify="center" class="column">
                         <v-stepper v-model="stepNumber">
                             <v-stepper-header>
-                                <v-stepper-step :complete="stepNumber > 1" step="1">Name of step 1</v-stepper-step>
+                                <v-stepper-step :complete="stepNumber > 1" step="1">Pick your day</v-stepper-step>
 
                                 <v-divider></v-divider>
 
-                                <v-stepper-step :complete="stepNumber > 2" step="2">Name of step 2</v-stepper-step>
+                                <v-stepper-step :complete="stepNumber > 2" step="2">Pick your hour</v-stepper-step>
 
                                 <v-divider></v-divider>
 
-                                <v-stepper-step step="3">Name of step 3</v-stepper-step>
+                                <v-stepper-step step="3">Information about You</v-stepper-step>
                             </v-stepper-header>
                             <v-stepper-items>
                                 <v-stepper-content step="1">
@@ -119,13 +137,23 @@
                 </v-dialog>
                 <v-row>
                     <v-col>
-                        <v-card v-if="demoNumber > 0">
-                            <v-card-actions>
-                                <v-btn color="secondary" @click="clearStorage">Clear localStorage</v-btn>
-                                <v-btn color="secondary" @click="aboutNumber++">About</v-btn>
-                            </v-card-actions>
-                        </v-card>
-                        <v-card v-if="aboutNumber > 0">
+                        <!-- <v-menu v-if="demoNumber > 0">
+                            <v-btn color="primary" dark v-bind="attrs" v-on="on"></v-btn>
+                            <v-list>
+                                <v-list-item>
+                                    <div></div>
+                                    <v-btn
+                                        color="secondary"
+                                        @click="clearStorage"
+                                    >Clear localStorage</v-btn>
+                                    <v-btn
+                                        color="secondary"
+                                        @click="aboutNumber = !aboutNumber"
+                                    >About</v-btn>
+                                </v-list-item>
+                            </v-list>
+                        </v-menu>-->
+                        <v-card v-if="aboutNumber">
                             <v-card-text>
                                 <b>About</b>
                                 <ul>
@@ -163,9 +191,10 @@ export default {
         },
         stepNumber: 1,
         demoNumber: 0,
-        aboutNumber: 0,
+        aboutNumber: false,
         formData: {},
         chosenHour: [],
+        closeOnContentClick: false
     }),
     components: {
         Timeline,
@@ -202,6 +231,9 @@ export default {
 <style lang="scss" scoped>
 // .column {
 //     display: grid;
+
+// .column {
+//     display: grid;
 //     grid-template-columns: 1fr 1fr;
 // }
 // .logo {
@@ -216,7 +248,7 @@ $color2: var(--v-secondary-base);
 .text-effect {
     overflow: hidden;
     position: relative;
-    filter: contrast(110%) brightness(190%);
+    filter: contrast(0.952) brightness(3);
 }
 
 .neon {
@@ -289,5 +321,6 @@ $color2: var(--v-secondary-base);
     justify-content: center;
     align-content: center;
     align-items: center;
+    height: 80vh;
 }
 </style>

@@ -47,7 +47,7 @@ export default {
         },
         filteredChosenSessions() {
             return this.sessions.filter(x => x.chosen)
-        }
+        },
     },
     methods: {
         format(number) {
@@ -85,5 +85,8 @@ export default {
 <style lang="scss" scoped>
 .active {
     border: 1px solid var(--v-accent-lighten2);
+}
+.timeline {
+    max-height: 50vh;
 }
 </style>
