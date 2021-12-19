@@ -4,7 +4,12 @@
             <!-- <v-app-bar elevation="2" color="primary">
 
             </v-app-bar>-->
-            <v-menu offset-y :close-on-content-click="closeOnContentClick">
+            <v-menu
+                :offset-y="offsetMenu"
+                :close-on-content-click="closeOnContentClick"
+                top
+                transition="slide-x-transition"
+            >
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn
                         @click="demoNumber = !demoNumber"
@@ -26,15 +31,18 @@
                 </v-list>
             </v-menu>
             <v-container>
-                <v-row>
+                <v-row class="all-content">
                     <v-col>
                         <div class="logo-container">
                             <div class="text-effect">
-                                <h1 class="neon" data-text="VRent">VRent</h1>
+                                <h1 class="neon" data-text="Vrent">VRent</h1>
                                 <div class="gradient"></div>
                                 <div class="spotlight"></div>
                             </div>
-                        </div>company description
+                            <i
+                                style="color:#8207f5"
+                            >Rent Google VR kit. We have everything to give you an amazing virtual reality experience.</i>
+                        </div>
                     </v-col>
                     <v-col align="center" justify="center" class="column">
                         <v-stepper v-model="stepNumber">
@@ -137,22 +145,6 @@
                 </v-dialog>
                 <v-row>
                     <v-col>
-                        <!-- <v-menu v-if="demoNumber > 0">
-                            <v-btn color="primary" dark v-bind="attrs" v-on="on"></v-btn>
-                            <v-list>
-                                <v-list-item>
-                                    <div></div>
-                                    <v-btn
-                                        color="secondary"
-                                        @click="clearStorage"
-                                    >Clear localStorage</v-btn>
-                                    <v-btn
-                                        color="secondary"
-                                        @click="aboutNumber = !aboutNumber"
-                                    >About</v-btn>
-                                </v-list-item>
-                            </v-list>
-                        </v-menu>-->
                         <v-card v-if="aboutNumber">
                             <v-card-text>
                                 <b>About</b>
@@ -161,7 +153,6 @@
                                         In association with:
                                         <a href="https://hiijac.com/">HIIJAC</a>
                                         I thank him all my knowledge and skills
-                                        {{ chosenHoursToString }}
                                     </li>
                                 </ul>
                             </v-card-text>
@@ -194,7 +185,8 @@ export default {
         aboutNumber: false,
         formData: {},
         chosenHour: [],
-        closeOnContentClick: false
+        closeOnContentClick: false,
+        offsetMenu: true
     }),
     components: {
         Timeline,
@@ -319,8 +311,35 @@ $color2: var(--v-secondary-base);
 .logo-container {
     display: flex;
     justify-content: center;
-    align-content: center;
     align-items: center;
-    height: 80vh;
+    flex-direction: column;
+}
+.all-content {
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+</style>
+<style lang="scss" >
+*::-webkit-scrollbar {
+    width: 15px;
+}
+
+*::-webkit-scrollbar-track {
+    background: #202020;
+    border-left: 1px solid #2c2c2c;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #3e3e3e;
+    border: solid 3px #202020;
+    border-radius: 7px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: white;
+}
+.container {
+    height: 100%;
 }
 </style>

@@ -1,5 +1,5 @@
-<template>
-    <v-timeline dense>
+<template >
+    <v-timeline dense class="timeline">
         <v-timeline-item v-for="(item, i) in filteredSessions" :key="i">
             <v-card>
                 <div class="py-1 pl-4 pr-2">
@@ -15,7 +15,7 @@
                 </div>
             </v-card>
         </v-timeline-item>
-        <v-btn color="secondary" @click="$emit('hourChosen', filteredChosenSessions)">emit</v-btn>
+        <v-btn color="secondary" @click="$emit('hourChosen', filteredChosenSessions)">Next</v-btn>
     </v-timeline>
 </template>
 
@@ -36,14 +36,14 @@ export default {
         filteredSessions() {
             return this.sessions.filter(session => {
                 return !this.chosenDayReservations.some(reservation => {
-                    return reservation.startHour == session.start.hour
+                    return reservation.start.hour == session.start.hour
                 })
             })
         },
         chosenDayReservations() {
             return this.reserved
                 .filter(x => x.day == this.chosenDay)
-                .map(x => x.hour)
+                .flatMap(x => x.hour)
         },
         filteredChosenSessions() {
             return this.sessions.filter(x => x.chosen)
@@ -84,9 +84,10 @@ export default {
 
 <style lang="scss" scoped>
 .active {
-    border: 1px solid var(--v-accent-lighten2);
+    border: 5px solid var(--v-primary-base);
 }
 .timeline {
     max-height: 50vh;
+    overflow-y: auto;
 }
 </style>
