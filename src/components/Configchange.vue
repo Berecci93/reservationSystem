@@ -34,9 +34,16 @@
                 :rules="sessionRules"
                 required
             ></v-text-field>
-            <v-btn class="mr-4" color="success" :disabled="!valid" @click="agree">Agree</v-btn>
-
-            <v-btn color="error" class="mr-4" @click="reset">Reset Form</v-btn>
+            <v-card-actions>
+                <v-btn
+                    class="mr-4"
+                    color="success"
+                    :disabled="!valid"
+                    @click="$emit('hideConfig')"
+                >OK</v-btn>
+                <v-spacer></v-spacer>
+                <v-btn color="error" class="mr-4" @click="$emit('hideConfig')">Cancel</v-btn>
+            </v-card-actions>
         </v-card-text>
     </v-form>
 </template>
@@ -51,6 +58,7 @@ export default {
         startRules: [
             v => !!v || 'Value is required',
             v => (v && v > 0 && v <= 24) || 'Value cannot be greater than 24',
+
         ],
         endRules: [
             v => !!v || 'Value is required',
@@ -66,14 +74,7 @@ export default {
         ],
     }),
 
-    methods: {
-        agree() {
-            this.$emit("submitedConfigData", { ...this.configData })
-        },
-        reset() {
-            this.$refs.form.reset()
-        },
-    },
+
 }
 </script>
 <style lang="scss" scoped>

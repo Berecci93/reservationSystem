@@ -32,12 +32,17 @@
                     </td>
                     <td>{{ formData.phoneNumber }}</td>
                 </tr>
+                <tr v-if="formData.userComment">
+                    <td>
+                        <i>{{ "Comment" }}</i>
+                    </td>
+                    <td>{{ formData.userComment }}</td>
+                </tr>
             </tbody>
         </v-simple-table>
         <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="success" @click="$emit('clearForm')">Ok</v-btn>
-            <!-- <v-btn color="primary">Agree</v-btn> -->
         </v-card-actions>
     </v-card>
 </template>

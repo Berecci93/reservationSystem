@@ -2,15 +2,11 @@
     <v-app>
         <v-app-bar app elevation="2" color="primary" rounded>
             <v-spacer></v-spacer>
-            <v-btn
-                class="nav-btn"
-                color="primary"
-                @click="displayOnStart = !displayOnStart"
-            >reservation</v-btn>
-            <v-btn class="nav-btn" color="primary">prices</v-btn>
-            <v-btn class="nav-btn" color="primary">our games</v-btn>
-            <v-btn class="nav-btn" color="primary">about</v-btn>
-            <v-btn class="nav-btn" color="primary">contact</v-btn>
+            <v-btn class="nav-btn" color="primary" @click="display = 'reservation'">reservation</v-btn>
+            <v-btn class="nav-btn" color="primary" @click="display = 'prices'">prices</v-btn>
+            <v-btn class="nav-btn" color="primary" @click="display = 'games'">our games</v-btn>
+            <v-btn class="nav-btn" color="primary" @click="display = 'about'">about</v-btn>
+            <v-btn class="nav-btn" color="primary" @click="display = 'contact'">contact</v-btn>
         </v-app-bar>
         <v-main>
             <div class="skewed-bar"></div>
@@ -55,29 +51,20 @@
                         </div>
                     </v-col>
                     <v-col align="center" justify="center" class="column">
+                        <Prices v-if="display == 'prices'"></Prices>
+                        <Games v-if="display == 'games'"></Games>
+                        <Contact v-if="display == 'contact'"></Contact>
                         <Stepper
-                            v-if="displayOnStart"
+                            v-if="display == 'reservation'"
                             :config="config"
                             @clearForm="stepperKey++"
                             :key="stepperKey"
                         ></Stepper>
-                        <!-- <v-card v-if="!displayOnStart">
-                            <v-card-text>
-                                <b>About</b>
-                                <ul>
-                                    <li>
-                                        In association with:
-                                        <a href="https://hiijac.com/">HIIJAC</a>
-                                        I thank him all my knowledge and skills
-                                    </li>
-                                </ul>
-                            </v-card-text>
-                        </v-card>-->
                     </v-col>
                 </v-row>
                 <v-dialog v-model="changeConfig">
                     <v-card>
-                        <Configchange :configData="config"></Configchange>
+                        <Configchange :configData="config" @hideConfig="hideConfig"></Configchange>
                         <!-- @submitedConfigData="changedConfigData = $event" -->
                     </v-card>
                 </v-dialog>
@@ -90,6 +77,9 @@
 <script>
 import Stepper from './components/Stepper.vue';
 import Configchange from './components/Configchange.vue'
+import Prices from './components/Prices.vue'
+import Games from './components/Games.vue'
+import Contact from './components/Contact.vue';
 
 export default {
     data: () => ({
@@ -102,17 +92,23 @@ export default {
         stepperKey: 1000,
         demoMenu: false,
         about: false,
-        displayOnStart: false,
+        display: false,
         changeConfig: false,
         changedConfigData: {}
     }),
     components: {
         Stepper,
-        Configchange
+        Configchange,
+        Prices,
+        Games,
+        Contact
     },
     methods: {
         clearStorage() {
             localStorage.clear()
+        },
+        hideConfig() {
+            this.changeConfig = false
         },
     },
 };
