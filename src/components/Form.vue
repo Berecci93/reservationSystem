@@ -4,6 +4,7 @@
             <v-row>
                 <v-col>
                     <v-text-field
+                        autocomplete="false"
                         v-model="formData.firstname"
                         :rules="nameRules"
                         :counter="50"
@@ -12,6 +13,7 @@
                     ></v-text-field>
 
                     <v-text-field
+                        autocomplete="false"
                         v-model="formData.lastname"
                         :rules="nameRules"
                         :counter="50"
@@ -20,6 +22,7 @@
                     ></v-text-field>
 
                     <v-text-field
+                        autocomplete="false"
                         v-model="formData.phoneNumber"
                         :rules="phoneRules"
                         :counter="12"
@@ -29,6 +32,7 @@
                     ></v-text-field>
 
                     <v-text-field
+                        autocomplete="false"
                         v-model="formData.email"
                         :rules="emailRules"
                         label="E-mail"
@@ -49,6 +53,7 @@
 </template>
 <script>
 export default {
+    name: "Form",
     data: () => ({
         valid: false,
         formData: {
@@ -66,6 +71,7 @@ export default {
         phoneRules: [
             v => !!v || "Number is required",
             v => !!v && v.length <= 12 || "Number must be less than 12 characters",
+            v => !!v && v.length >= 9 || "Number must be greater than 8 characters"
         ],
         emailRules: [
             v => !!v || 'E-mail is required',

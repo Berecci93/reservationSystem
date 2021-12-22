@@ -1,18 +1,28 @@
 <template >
     <v-app>
+        <v-app-bar app elevation="2" color="primary" rounded>
+            <v-spacer></v-spacer>
+            <v-btn
+                class="nav-btn"
+                color="primary"
+                @click="displayOnStart = !displayOnStart"
+            >reservation</v-btn>
+            <v-btn class="nav-btn" color="primary">prices</v-btn>
+            <v-btn class="nav-btn" color="primary">our games</v-btn>
+            <v-btn class="nav-btn" color="primary">about</v-btn>
+            <v-btn class="nav-btn" color="primary">contact</v-btn>
+        </v-app-bar>
         <v-main>
-            <!-- <v-app-bar elevation="2" color="primary">
-
-            </v-app-bar>-->
+            <div class="skewed-bar"></div>
             <v-menu
-                :offset-y="offsetMenu"
-                :close-on-content-click="closeOnContentClick"
+                :offset-y="true"
+                :close-on-content-click="false"
                 top
                 transition="slide-x-transition"
             >
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn
-                        @click="demoNumber = !demoNumber"
+                        @click="demoMenu = !demoMenu"
                         color="primary"
                         fab
                         left
@@ -27,7 +37,7 @@
                 </template>
                 <v-list>
                     <v-list-item @click="clearStorage">Clear localStorage</v-list-item>
-                    <v-list-item @click="aboutNumber = !aboutNumber">About</v-list-item>
+                    <v-list-item @click="changeConfig = !changeConfig">Change Config Hours</v-list-item>
                 </v-list>
             </v-menu>
             <v-container>
@@ -45,107 +55,13 @@
                         </div>
                     </v-col>
                     <v-col align="center" justify="center" class="column">
-                        <v-stepper v-model="stepNumber">
-                            <v-stepper-header>
-                                <v-stepper-step :complete="stepNumber > 1" step="1">Pick your day</v-stepper-step>
-
-                                <v-divider></v-divider>
-
-                                <v-stepper-step :complete="stepNumber > 2" step="2">Pick your hour</v-stepper-step>
-
-                                <v-divider></v-divider>
-
-                                <v-stepper-step step="3">Information about You</v-stepper-step>
-                            </v-stepper-header>
-                            <v-stepper-items>
-                                <v-stepper-content step="1">
-                                    <!-- date przechowuje info z wybrana data po @input -->
-                                    <v-date-picker
-                                        v-model="date"
-                                        :min="minDate"
-                                        @input="stepNumber = 2"
-                                    ></v-date-picker>
-                                </v-stepper-content>
-                                <v-stepper-content step="2">
-                                    <Timeline
-                                        :config="config"
-                                        :reserved="savedDates"
-                                        :chosenDay="date"
-                                        v-if="date"
-                                        @hourChosen="chosenHour = $event; stepNumber = 3"
-                                    ></Timeline>
-                                </v-stepper-content>
-                                <v-stepper-content step="3">
-                                    <Form
-                                        ref="form"
-                                        v-if="date"
-                                        @submitFormData="submitBtn($event)"
-                                    ></Form>
-                                </v-stepper-content>
-                            </v-stepper-items>
-                        </v-stepper>
-                        <!-- <v-col>
-                        <div class="logo">
-                            <img src=".\assets\vue logo.png" />
-                        </div>
-                        </v-col>-->
-                    </v-col>
-                </v-row>
-                <v-dialog v-model="dialog" max-width="400">
-                    <v-card>
-                        <v-simple-table>
-                            <!-- <thead>
-                                    <tr>
-                                        <th>Check your data</th>
-                                        <th></th>
-                                    </tr>
-                            </thead>-->
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <i>{{ "Picked date" }}</i>
-                                    </td>
-                                    <td>{{ date }}</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <i>{{ "Hour" }}</i>
-                                    </td>
-                                    <td>{{ chosenHoursToString }}</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <i>{{ "Name" }}</i>
-                                    </td>
-                                    <td>{{ formData.lastname + ' ' + formData.firstname }}</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <i>{{ "Email" }}</i>
-                                    </td>
-                                    <td>{{ formData.email }}</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <i>{{ "Phone number" }}</i>
-                                    </td>
-                                    <td>{{ formData.phoneNumber }}</td>
-                                </tr>
-                            </tbody>
-                        </v-simple-table>
-                        <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn
-                                color="success"
-                                @click="dialog = false; $refs.form.clear(); stepNumber = 1"
-                            >Ok</v-btn>
-                            <!-- <v-btn color="primary">Agree</v-btn> -->
-                        </v-card-actions>
-                    </v-card>
-                </v-dialog>
-                <v-row>
-                    <v-col>
-                        <v-card v-if="aboutNumber">
+                        <Stepper
+                            v-if="displayOnStart"
+                            :config="config"
+                            @clearForm="stepperKey++"
+                            :key="stepperKey"
+                        ></Stepper>
+                        <!-- <v-card v-if="!displayOnStart">
                             <v-card-text>
                                 <b>About</b>
                                 <ul>
@@ -156,9 +72,15 @@
                                     </li>
                                 </ul>
                             </v-card-text>
-                        </v-card>
+                        </v-card>-->
                     </v-col>
                 </v-row>
+                <v-dialog v-model="changeConfig">
+                    <v-card>
+                        <Configchange :configData="config"></Configchange>
+                        <!-- @submitedConfigData="changedConfigData = $event" -->
+                    </v-card>
+                </v-dialog>
             </v-container>
         </v-main>
     </v-app>
@@ -166,77 +88,42 @@
 
 
 <script>
-import Timeline from './components/Timeline.vue';
-import Form from './components/Form.vue';
+import Stepper from './components/Stepper.vue';
+import Configchange from './components/Configchange.vue'
 
 export default {
     data: () => ({
-        date: null,
-        dialog: false,
-        savedDates: [],
         config: {
             start: 8,
             end: 20,
-            sesja: 60,
-            przerwa: 15
+            breakLength: 15,
+            sessionLength: 60
         },
-        stepNumber: 1,
-        demoNumber: 0,
-        aboutNumber: false,
-        formData: {},
-        chosenHour: [],
-        closeOnContentClick: false,
-        offsetMenu: true
+        stepperKey: 1000,
+        demoMenu: false,
+        about: false,
+        displayOnStart: false,
+        changeConfig: false,
+        changedConfigData: {}
     }),
     components: {
-        Timeline,
-        Form
-    },
-    computed: {
-        minDate() {
-            return new Date().toISOString().substr(0, 10)
-        },
-        chosenHoursToString() {
-            return this.chosenHour.map(obj => `${obj.start.hour}:${obj.start.minutes}-${obj.end.hour}:${obj.end.minutes}`).join(", ")
-        }
+        Stepper,
+        Configchange
     },
     methods: {
-        submitBtn(event) {
-            //formData = $event; dialog = true
-            this.formData = event
-            this.dialog = true
-            this.savedDates.push({ day: this.date, hour: this.chosenHour })
-            localStorage.setItem("reserved", JSON.stringify(this.savedDates))
-        },
         clearStorage() {
             localStorage.clear()
         },
-
     },
-    created() {
-        let storageString = localStorage.getItem("reserved")
-        this.savedDates = JSON.parse(storageString) || []
-        this.date = this.minDate
-    }
 };
 </script>
 <style lang="scss" scoped>
-// .column {
-//     display: grid;
-
-// .column {
-//     display: grid;
-//     grid-template-columns: 1fr 1fr;
-// }
-// .logo {
-//     margin: 6rem 0 0 0;
-// }
-
-//--------------------------------------
-
 $color1: var(--v-primary-base);
 $color2: var(--v-secondary-base);
 
+.nav-btn {
+    margin: 0rem 1rem 0rem 1rem;
+}
 .text-effect {
     overflow: hidden;
     position: relative;
@@ -339,6 +226,7 @@ $color2: var(--v-secondary-base);
 *::-webkit-scrollbar-thumb:hover {
     background: white;
 }
+
 .container {
     height: 100%;
 }

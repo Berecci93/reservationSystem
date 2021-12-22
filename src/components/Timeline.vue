@@ -1,22 +1,29 @@
 <template >
-    <v-timeline dense class="timeline">
-        <v-timeline-item v-for="(item, i) in filteredSessions" :key="i">
-            <v-card>
-                <div class="py-1 pl-4 pr-2">
-                    {{ "od " + item.start.hour + ":" + item.start.minutes + " do " + item.end.hour + ":" + item.end.minutes }}
-                    <v-btn
-                        icon
-                        v-bind:class="{ active: item.chosen }"
-                        class="ml-1"
-                        @click="item.chosen = !item.chosen"
-                    >
-                        <v-icon color="primary">mdi-check-circle</v-icon>
-                    </v-btn>
-                </div>
-            </v-card>
-        </v-timeline-item>
-        <v-btn color="secondary" @click="$emit('hourChosen', filteredChosenSessions)">Next</v-btn>
-    </v-timeline>
+    <v-container>
+        <div>
+            <v-timeline dense class="timeline">
+                <v-timeline-item v-for="(item, i) in filteredSessions" :key="i">
+                    <v-card>
+                        <div class="py-1 pl-4 pr-2">
+                            {{ "od " + item.start.hour + ":" + item.start.minutes + " do " + item.end.hour + ":" + item.end.minutes }}
+                            <v-btn
+                                icon
+                                v-bind:class="{ active: item.chosen }"
+                                class="ml-1"
+                                @click="item.chosen = !item.chosen"
+                            >
+                                <v-icon color="primary">mdi-check-circle</v-icon>
+                            </v-btn>
+                        </div>
+                    </v-card>
+                </v-timeline-item>
+            </v-timeline>
+        </div>
+
+        <div class="mt-4">
+            <v-btn color="secondary" @click="$emit('hourChosen', filteredChosenSessions)">Next</v-btn>
+        </div>
+    </v-container>
 </template>
 
 <script>
@@ -76,7 +83,7 @@ export default {
         },
     },
     created() {
-        this.policz(this.config.sesja, this.config.przerwa, this.config.start, this.config.end)
+        this.policz(this.config.sessionLength, this.config.breakLength, this.config.start, this.config.end)
     },
 
 }
