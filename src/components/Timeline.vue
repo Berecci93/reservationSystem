@@ -21,7 +21,10 @@
         </div>
 
         <div class="mt-4">
-            <v-btn color="secondary" @click="$emit('hourChosen', filteredChosenSessions)">Next</v-btn>
+            <v-btn
+                color="secondary"
+                @click="$emit('hourChosen', filteredChosenSessions), $emit('priceAmount', priceAmount)"
+            >Next</v-btn>
         </div>
     </v-container>
 </template>
@@ -55,6 +58,11 @@ export default {
         filteredChosenSessions() {
             return this.sessions.filter(x => x.chosen)
         },
+        //ilosc sesji * stawka
+        priceAmount() {
+            return this.filteredChosenSessions.length * this.config.price
+        }
+
     },
     methods: {
         format(number) {

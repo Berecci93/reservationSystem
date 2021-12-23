@@ -34,6 +34,14 @@
                 :rules="sessionRules"
                 required
             ></v-text-field>
+            <v-text-field
+                label="Price for hour (in PLN)"
+                placeholder="Price (in PLN)"
+                type="number"
+                v-model.number="configData.price"
+                :rules="priceRules"
+                required
+            ></v-text-field>
             <v-card-actions>
                 <v-btn
                     class="mr-4"
@@ -57,20 +65,28 @@ export default {
         valid: false,
         startRules: [
             v => !!v || 'Value is required',
+            v => v && v > 0 || "Value cannot be less than 0",
             v => (v && v > 0 && v <= 24) || 'Value cannot be greater than 24',
 
         ],
         endRules: [
             v => !!v || 'Value is required',
+            v => v && v > 0 || "Value cannot be less than 0",
             v => (v && v > 0 && v <= 24) || 'Value cannot be greater than 24',
         ],
         breakLengthRules: [
             v => !!v || 'Value is required',
+            v => v && v > 0 || "Value cannot be less than 0",
             v => (v && v > 0 && v <= 120) || 'Value cannot be greater than 120',
         ],
         sessionRules: [
             v => !!v || 'Value is required',
+            v => v && v > 0 || "Value cannot be less than 0",
             v => (v && v > 0 && v <= 300) || 'Value cannot be greater than 300',
+        ],
+        priceRules: [
+            v => !!v || "Value is empty",
+            v => (v && v > 0) || "Value cannot be less than 0"
         ],
     }),
 

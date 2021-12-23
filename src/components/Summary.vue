@@ -38,6 +38,12 @@
                     </td>
                     <td>{{ formData.userComment }}</td>
                 </tr>
+                <tr>
+                    <td>
+                        <i>{{ "Total amount" }}</i>
+                    </td>
+                    <td>{{ price }}</td>
+                </tr>
             </tbody>
         </v-simple-table>
         <v-card-actions>
@@ -52,7 +58,8 @@ export default {
     props: {
         date: String,
         formData: Object,
-        chosenHours: Array
+        chosenHours: Array,
+        price: Number
     },
     computed: {
         chosenHoursToString() {

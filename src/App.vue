@@ -2,7 +2,7 @@
     <v-app>
         <v-app-bar app elevation="2" color="primary" rounded>
             <v-spacer></v-spacer>
-            <v-btn class="nav-btn" color="primary" @click="display = 'reservation'">reservation</v-btn>
+            <v-btn class="nav-btn" color="primary" @click="display = 'stepper'">reservation</v-btn>
             <v-btn class="nav-btn" color="primary" @click="display = 'prices'">prices</v-btn>
             <v-btn class="nav-btn" color="primary" @click="display = 'games'">our games</v-btn>
             <v-btn class="nav-btn" color="primary" @click="display = 'about'">about</v-btn>
@@ -45,17 +45,16 @@
                                 <div class="gradient"></div>
                                 <div class="spotlight"></div>
                             </div>
-                            <i
-                                style="color:#8207f5"
-                            >Rent Google VR kit. We have everything to give you an amazing virtual reality experience.</i>
+                            <i style="color:#8207f5"></i>
                         </div>
                     </v-col>
                     <v-col align="center" justify="center" class="column">
-                        <Prices v-if="display == 'prices'"></Prices>
+                        <Prices v-if="display == 'prices'" :config="config"></Prices>
                         <Games v-if="display == 'games'"></Games>
                         <Contact v-if="display == 'contact'"></Contact>
                         <Stepper
-                            v-if="display == 'reservation'"
+                            @priceAmount="amount"
+                            v-if="display == 'stepper'"
                             :config="config"
                             @clearForm="stepperKey++"
                             :key="stepperKey"
@@ -65,7 +64,6 @@
                 <v-dialog v-model="changeConfig">
                     <v-card>
                         <Configchange :configData="config" @hideConfig="hideConfig"></Configchange>
-                        <!-- @submitedConfigData="changedConfigData = $event" -->
                     </v-card>
                 </v-dialog>
             </v-container>
@@ -77,7 +75,7 @@
 <script>
 import Stepper from './components/Stepper.vue';
 import Configchange from './components/Configchange.vue'
-import Prices from './components/Prices.vue'
+import Prices from './components/Prices.vue';
 import Games from './components/Games.vue'
 import Contact from './components/Contact.vue';
 
@@ -87,14 +85,16 @@ export default {
             start: 8,
             end: 20,
             breakLength: 15,
-            sessionLength: 60
+            sessionLength: 60,
+            price: 100
         },
         stepperKey: 1000,
         demoMenu: false,
         about: false,
-        display: false,
+        display: "",
         changeConfig: false,
-        changedConfigData: {}
+        changedConfigData: {},
+        amount: 0
     }),
     components: {
         Stepper,
@@ -109,7 +109,7 @@ export default {
         },
         hideConfig() {
             this.changeConfig = false
-        },
+        }
     },
 };
 </script>
