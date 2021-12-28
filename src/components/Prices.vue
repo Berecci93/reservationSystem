@@ -5,9 +5,9 @@
                 <tr>
                     <td>
                         <v-icon class="mr-3">mdi-cash-100</v-icon>
-                        {{ "Price" }}
+                        {{ "Price for the session" }}
                     </td>
-                    <td>{{ `${config.price} pln` }}</td>
+                    <td>{{ `${config.price} PLN` }}</td>
                 </tr>
                 <tr>
                     <td>
@@ -21,14 +21,7 @@
                         <v-icon class="mr-3">mdi-information-outline</v-icon>
                         {{ "Discount" }}
                     </td>
-                    <td>{{ "From 2 Hours +" }}</td>
-                </tr>
-                <tr>
-                    <td>
-                        <v-icon class="mr-3">mdi-gamepad-outline</v-icon>
-                        {{ "Number of our games" }}
-                    </td>
-                    <td>{{ "tu liczba gier z games.vue" }}</td>
+                    <td>{{ "From 300 PLN" }}</td>
                 </tr>
             </tbody>
         </v-simple-table>

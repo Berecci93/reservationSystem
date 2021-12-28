@@ -5,11 +5,10 @@
             <v-btn class="nav-btn" color="primary" @click="display = 'stepper'">reservation</v-btn>
             <v-btn class="nav-btn" color="primary" @click="display = 'prices'">prices</v-btn>
             <v-btn class="nav-btn" color="primary" @click="display = 'games'">our games</v-btn>
-            <v-btn class="nav-btn" color="primary" @click="display = 'about'">about</v-btn>
+            <v-btn class="nav-btn" color="primary" @click="display = 'faq'">FAQ</v-btn>
             <v-btn class="nav-btn" color="primary" @click="display = 'contact'">contact</v-btn>
         </v-app-bar>
         <v-main>
-            <div class="skewed-bar"></div>
             <v-menu
                 :offset-y="true"
                 :close-on-content-click="false"
@@ -38,20 +37,19 @@
             </v-menu>
             <v-container>
                 <v-row class="all-content">
-                    <v-col>
-                        <div class="logo-container">
-                            <div class="text-effect">
-                                <h1 class="neon" data-text="Vrent">VRent</h1>
-                                <div class="gradient"></div>
-                                <div class="spotlight"></div>
-                            </div>
-                            <i style="color:#8207f5"></i>
+                    <v-col class="logo-container">
+                        <div class="logo" style="--stacks: 3;">
+                            <span style="--index: 0;">VRENT</span>
+                            <span style="--index: 1;">VRENT</span>
+                            <span style="--index: 2;">VRENT</span>
                         </div>
+                        <span class="slogan">Experience a journey through countless realities</span>
                     </v-col>
                     <v-col align="center" justify="center" class="column">
                         <Prices v-if="display == 'prices'" :config="config"></Prices>
                         <Games v-if="display == 'games'"></Games>
                         <Contact v-if="display == 'contact'"></Contact>
+                        <Faq v-if="display == 'faq'"></Faq>
                         <Stepper
                             @priceAmount="amount"
                             v-if="display == 'stepper'"
@@ -68,6 +66,12 @@
                 </v-dialog>
             </v-container>
         </v-main>
+        <div id="bgplayer">
+            <video autoplay="autoplay" preload loop muted playsinline type="video/mp4">
+                <!-- https://www.youtube.com/watch?v=X_o4gW1ExdM Creative Commons -->
+                <source src="./assets/bg.mp4" type="video/mp4" poster="./assets/poster.png" />Twoja przeglądarka nie obsługuje trybu Video.
+            </video>
+        </div>
     </v-app>
 </template>
 
@@ -78,6 +82,7 @@ import Configchange from './components/Configchange.vue'
 import Prices from './components/Prices.vue';
 import Games from './components/Games.vue'
 import Contact from './components/Contact.vue';
+import Faq from './components/Faq.vue'
 
 export default {
     data: () => ({
@@ -101,7 +106,8 @@ export default {
         Configchange,
         Prices,
         Games,
-        Contact
+        Contact,
+        Faq
     },
     methods: {
         clearStorage() {
@@ -120,85 +126,112 @@ $color2: var(--v-secondary-base);
 .nav-btn {
     margin: 0rem 1rem 0rem 1rem;
 }
-.text-effect {
-    overflow: hidden;
-    position: relative;
-    filter: contrast(0.952) brightness(3);
-}
-
-.neon {
-    position: relative;
-    background: black;
-    color: transparent;
-
-    &::before,
-    &::after {
-        content: attr(data-text);
-        color: white;
-        filter: blur(0.02em);
-        position: absolute;
-        top: 0;
-        left: 0;
-        pointer-events: none;
-    }
-
-    &::after {
-        mix-blend-mode: difference;
-    }
-}
-
-.gradient,
-.spotlight {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    pointer-events: none;
-    z-index: 10;
-}
-
-.gradient {
-    background: linear-gradient(45deg, $color1, $color2);
-    mix-blend-mode: multiply;
-}
-
-.spotlight {
-    animation: light 25s infinite linear;
-
-    background: radial-gradient(circle, white, transparent 25%) 0 0 / 25% 25%,
-        radial-gradient(circle, white, black 25%) 50% 50% / 12.5% 12.5%;
-    top: -100%;
-    left: -100%;
-
-    mix-blend-mode: color-dodge;
-}
-
-@keyframes light {
-    100% {
-        transform: translate3d(50%, 50%, 0);
-    }
-}
-.neon {
-    font: 700 150px "Lato", sans-serif;
-    text-transform: uppercase;
-    text-align: center;
-    margin: 0;
-
-    &:focus {
-        outline: none;
-        border: 1px dotted white;
-    }
-}
 
 .logo-container {
-    display: flex;
-    justify-content: center;
     align-items: center;
+    display: flex;
     flex-direction: column;
 }
+
+.slogan {
+    font-family: "Genos", sans-serif;
+    font-size: clamp(0.95rem, 1.45vw, 1.45rem);
+    text-shadow: 1px 1px 3px #0005;
+}
+.logo {
+    font-family: "Genos", sans-serif;
+    font-size: clamp(6rem, 9vw, 9rem);
+    font-weight: 600;
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.logo span {
+    font-weight: bold;
+    grid-row-start: 1;
+    grid-column-start: 1;
+    --stack-height: calc(100% / var(--stacks) - 1px);
+    --inverse-index: calc(calc(var(--stacks) - 1) - var(--index));
+    --clip-top: calc(var(--stack-height) * var(--index));
+    --clip-bottom: calc(var(--stack-height) * var(--inverse-index));
+    clip-path: inset(var(--clip-top) 0 var(--clip-bottom) 0);
+    animation: stack 85ms cubic-bezier(0.46, 0.29, 0, 1.24) 1 backwards
+            calc(var(--index) * 30ms),
+        glitch 2s ease infinite 2s alternate-reverse;
+    text-shadow: 1px 1px 3px #0005;
+}
+
+.logo span:nth-child(odd) {
+    --glitch-translate: 8px;
+}
+
+.logo span:nth-child(even) {
+    --glitch-translate: -8px;
+}
+
+@keyframes stack {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%);
+        text-shadow: -2px 3px 0 red, 2px -3px 0 blue;
+    }
+
+    60% {
+        opacity: 0.5;
+        transform: translateX(50%);
+    }
+
+    80% {
+        transform: none;
+        opacity: 1;
+        text-shadow: 2px -3px 0 red, -2px 3px 0 blue;
+    }
+
+    100% {
+        text-shadow: none;
+    }
+}
+
+@keyframes glitch {
+    0% {
+        text-shadow: -2px 3px 0 red, 2px -3px 0 blue;
+        transform: translate(var(--glitch-translate));
+    }
+
+    2% {
+        text-shadow: 2px -3px 0 red, -2px 3px 0 blue;
+    }
+
+    4%,
+    100% {
+        text-shadow: none;
+        transform: none;
+    }
+}
+
+#bgplayer {
+    z-index: -5;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: block;
+    overflow: hidden;
+    max-width: 100%;
+    max-height: 100%;
+    background-image: url(./assets/poster.png);
+    background-position: center center;
+    background-size: cover;
+    filter: blur(8px) brightness(0.2);
+}
+
+#bgplayer video {
+    min-height: 100vh;
+    min-width: 100vw;
+    object-fit: cover;
+}
+
 .all-content {
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     height: 100%;
 }
@@ -225,5 +258,19 @@ $color2: var(--v-secondary-base);
 
 .container {
     height: 100%;
+}
+.v-toolbar__content {
+    align-items: center;
+    display: flex;
+    position: relative;
+    z-index: 0;
+}
+
+.theme--dark.v-application {
+    background: none !important;
+}
+
+body {
+    background-color: #121212;
 }
 </style>

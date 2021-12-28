@@ -43,14 +43,14 @@
                 required
             ></v-text-field>
             <v-card-actions>
+                <v-btn color="error" class="mr-4" @click="$emit('hideConfig')">Cancel</v-btn>
+                <v-spacer></v-spacer>
                 <v-btn
                     class="mr-4"
                     color="success"
                     :disabled="!valid"
                     @click="$emit('hideConfig')"
                 >OK</v-btn>
-                <v-spacer></v-spacer>
-                <v-btn color="error" class="mr-4" @click="$emit('hideConfig')">Cancel</v-btn>
             </v-card-actions>
         </v-card-text>
     </v-form>

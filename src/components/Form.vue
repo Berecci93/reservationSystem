@@ -36,6 +36,7 @@
                         v-model="formData.email"
                         :rules="emailRules"
                         label="E-mail"
+                        type="email"
                         required
                     ></v-text-field>
                     <v-textarea
