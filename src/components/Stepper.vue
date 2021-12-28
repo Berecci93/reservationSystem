@@ -28,6 +28,7 @@
             </v-stepper-content>
             <v-stepper-content step="4">
                 <Summary
+                    :config="config"
                     :chosenHours="chosenHours"
                     :date="date"
                     :formData="formData"

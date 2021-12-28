@@ -42,7 +42,7 @@
                     <td>
                         <i>{{ "Total amount" }}</i>
                     </td>
-                    <td>{{ price }}</td>
+                    <td>{{ totalPrice }}</td>
                 </tr>
             </tbody>
         </v-simple-table>
@@ -59,11 +59,21 @@ export default {
         date: String,
         formData: Object,
         chosenHours: Array,
-        price: Number
+        config: Object
     },
     computed: {
         chosenHoursToString() {
             return this.chosenHours.map(obj => `${obj.start.hour}:${obj.start.minutes} - ${obj.end.hour}:${obj.end.minutes}`).join(", ")
+        },
+        totalPrice() {
+
+            if (this.chosenHours.length * this.config.price <= 300) {
+                return this.chosenHours.length * this.config.price + " PLN"
+
+            }
+            else {
+                return this.chosenHours.length * this.config.price + " PLN" + " you can get a discount"
+            }
         }
     },
 
