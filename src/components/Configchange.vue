@@ -42,8 +42,8 @@
                 :rules="priceRules"
                 required
             ></v-text-field>
+            <v-checkbox label="Weekends" v-model="checkbox"></v-checkbox>
             <v-card-actions>
-                <v-btn color="error" class="mr-4" @click="$emit('hideConfig')">Cancel</v-btn>
                 <v-spacer></v-spacer>
                 <v-btn
                     class="mr-4"

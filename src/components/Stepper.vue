@@ -1,5 +1,5 @@
 <template>
-    <v-stepper v-model="stepNumber" vertical>
+    <v-stepper v-model="stepNumber">
         <v-stepper-header>
             <v-stepper-step :complete="stepNumber > 1" step="1">Pick a day</v-stepper-step>
             <v-divider></v-divider>

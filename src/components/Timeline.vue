@@ -4,17 +4,11 @@
             <v-timeline dense class="timeline">
                 <v-timeline-item v-for="(item, i) in filteredSessions" :key="i">
                     <v-card>
-                        <div class="py-1 pl-4 pr-2">
-                            {{ "od " + item.start.hour + ":" + item.start.minutes + " do " + item.end.hour + ":" + item.end.minutes }}
-                            <v-btn
-                                icon
-                                v-bind:class="{ active: item.chosen }"
-                                class="ml-1"
-                                @click="item.chosen = !item.chosen"
-                            >
-                                <v-icon color="primary">mdi-check-circle</v-icon>
-                            </v-btn>
-                        </div>
+                        <v-btn
+                            block
+                            v-bind:class="{ active: item.chosen }"
+                            @click="item.chosen = !item.chosen"
+                        >{{ "od " + item.start.hour + ":" + item.start.minutes + " do " + item.end.hour + ":" + item.end.minutes }}</v-btn>
                     </v-card>
                 </v-timeline-item>
             </v-timeline>
@@ -104,5 +98,10 @@ export default {
 .timeline {
     max-height: 50vh;
     overflow-y: auto;
+}
+</style>
+<style lang="scss">
+.v-timeline-item__body > .v-card:after {
+    border-right-color: #272727 !important;
 }
 </style>

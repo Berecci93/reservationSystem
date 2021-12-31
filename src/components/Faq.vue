@@ -1,6 +1,5 @@
 <template>
-    <v-container>
-        <h2>{{ "VR" }}</h2>
+    <v-card>
         <v-card-title @click="whatIsVr = !whatIsVr" class="title">{{ "What is VR" }}</v-card-title>
         <v-expand-transition>
             <v-card-text
@@ -18,7 +17,6 @@
                 class="text"
             >{{ "Since the world around you turns every time you move your head, you feel like you're “in the game” mentally and physically. In other words, you feel like you're part of another universe." }}</v-card-text>
         </v-expand-transition>
-        <h2>{{ "Our equipment" }}</h2>
         <v-card-title @click="equipment = !equipment" class="title">{{ "Number of stands" }}</v-card-title>
         <v-expand-transition>
             <v-card-text
@@ -31,9 +29,9 @@
             <v-card-text
                 class="text"
                 v-if="gear"
-            >{{ "Our stand is equipped with Vr Vive because we believe that it is the best available equipment on the market." }}</v-card-text>
+            >{{ "Our stand is equipped with PS VR because we believe that it is the best available equipment on the market." }}</v-card-text>
         </v-expand-transition>
-    </v-container>
+    </v-card>
 </template>
 
 <script>
@@ -52,12 +50,14 @@ export default {
 <style lang="scss" scoped>
 .text {
     font-style: italic;
+    text-align: start;
 }
 .title {
-    color: blueviolet;
+    color: var(--v-primary-lighten1);
     margin-bottom: 1rem;
 }
 .title:hover {
     cursor: pointer;
+    color: var(--v-primary-lighten2);
 }
 </style>

@@ -42,7 +42,11 @@
                     <td>
                         <i>{{ "Total amount" }}</i>
                     </td>
-                    <td>{{ totalPrice }}</td>
+                    <td>
+                        <span class="original-price">{{ originalPrice }}</span>
+                        <span class="final-price">&nbsp;{{ finalPrice }} PLN</span>
+                        <span v-if="originalPrice">&nbsp;({{ discount * 100 }}% discount)</span>
+                    </td>
                 </tr>
             </tbody>
         </v-simple-table>
@@ -61,24 +65,41 @@ export default {
         chosenHours: Array,
         config: Object
     },
+    data() {
+        return {
+            discount: (20 / 100),
+            discountThreshold: 300
+        }
+    },
     computed: {
         chosenHoursToString() {
             return this.chosenHours.map(obj => `${obj.start.hour}:${obj.start.minutes} - ${obj.end.hour}:${obj.end.minutes}`).join(", ")
         },
-        totalPrice() {
-
-            if (this.chosenHours.length * this.config.price <= 300) {
-                return this.chosenHours.length * this.config.price + " PLN"
-
-            }
-            else {
-                return this.chosenHours.length * this.config.price + " PLN" + " you can get a discount"
-            }
-        }
+        total() {
+            return this.chosenHours.length * this.config.price
+        },
+        originalPrice() {
+            return this.total > this.discountThreshold ? this.total : null;
+        },
+        finalPrice() {
+            return this.total > this.discountThreshold ?
+                this.total - (this.total * this.discount) :
+                this.total;
+        },
     },
 
 }
 </script>
 
 <style lang="scss" scoped>
+.original-price {
+    text-decoration: line-through;
+    text-decoration-color: black;
+    color: red;
+    font-size: small;
+    font-style: italic;
+}
+.final-price {
+    font-size: larger;
+}
 </style>
