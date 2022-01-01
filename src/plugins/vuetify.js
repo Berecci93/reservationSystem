@@ -23,8 +23,8 @@ export default new Vuetify({
       // },
       dark: {
         primary: '#8207f5',
-        secondary: '#00B2CA',
-        accent: '#00B2CA',
+        secondary: '#8207f5',
+        accent: '#8207f5',
         error: '#FF5252',
         info: '#2196F3',
         success: '#4CAF50',

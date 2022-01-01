@@ -47,7 +47,8 @@ export default {
 
 <style lang="scss" scoped>
 .btn {
-    margin: 2rem;
+    margin: 1rem;
+    height: fit-content;
 }
 .link {
     text-decoration: none;

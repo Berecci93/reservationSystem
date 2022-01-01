@@ -2,11 +2,39 @@
     <v-app>
         <v-app-bar app elevation="2" color="primary" rounded>
             <v-spacer></v-spacer>
-            <v-btn class="nav-btn" color="primary" @click="display = 'stepper'">reservation</v-btn>
-            <v-btn class="nav-btn" color="primary" @click="display = 'prices'">prices</v-btn>
-            <v-btn class="nav-btn" color="primary" @click="display = 'games'">our games</v-btn>
-            <v-btn class="nav-btn" color="primary" @click="display = 'faq'">FAQ</v-btn>
-            <v-btn class="nav-btn" color="primary" @click="display = 'contact'">contact</v-btn>
+
+            <v-menu
+                v-if="$vuetify.breakpoint.smAndDown"
+                transition="slide-y-transition"
+                bottom
+                left
+            >
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn dark icon v-bind="attrs" v-on="on">
+                        <v-icon>mdi-menu</v-icon>
+                    </v-btn>
+                </template>
+
+                <v-list style="background-color: #272727" dark>
+                    <v-list-item v-for="item in btns" :key="item.label" link>
+                        <v-btn block @click="display = item.label">
+                            <v-icon>{{ item.icon }}</v-icon>
+                            <span class="mx-2">{{ item.label }}</span>
+                        </v-btn>
+                    </v-list-item>
+                </v-list>
+            </v-menu>
+
+            <v-btn
+                v-for="item in btns"
+                :key="item.label"
+                class="mx-3"
+                @click="display = item.label"
+                v-else
+            >
+                <v-icon>{{ item.icon }}</v-icon>
+                <span class="mx-2">{{ item.label }}</span>
+            </v-btn>
         </v-app-bar>
         <v-main>
             <v-menu
@@ -35,7 +63,7 @@
                     <v-list-item @click="changeConfig = !changeConfig">Change Config Hours</v-list-item>
                 </v-list>
             </v-menu>
-            <v-container>
+            <div class="stretch-height">
                 <v-row class="all-content">
                     <v-col class="logo-container">
                         <div class="logo" style="--stacks: 3;">
@@ -45,26 +73,25 @@
                         </div>
                         <span class="slogan">Experience a journey through countless realities</span>
                     </v-col>
-                    <v-col align="center" justify="center" class="column">
+                    <v-col class="column align-center justify-center">
                         <Prices v-if="display == 'prices'" :config="config"></Prices>
                         <Games v-if="display == 'games'"></Games>
                         <Contact v-if="display == 'contact'"></Contact>
                         <Faq v-if="display == 'faq'"></Faq>
                         <Stepper
-                            @priceAmount="amount"
-                            v-if="display == 'stepper'"
+                            v-if="display == 'reservation'"
                             :config="config"
                             @clearForm="stepperKey++"
                             :key="stepperKey"
                         ></Stepper>
                     </v-col>
                 </v-row>
-                <v-dialog v-model="changeConfig">
+                <v-dialog v-model="changeConfig" max-width="600">
                     <v-card>
                         <Configchange :configData="config" @hideConfig="hideConfig"></Configchange>
                     </v-card>
                 </v-dialog>
-            </v-container>
+            </div>
         </v-main>
         <div id="bgplayer">
             <video autoplay="autoplay" preload loop muted playsinline type="video/mp4">
@@ -93,13 +120,32 @@ export default {
             sessionLength: 60,
             price: 100
         },
+        btns: [
+            {
+                label: "reservation",
+                icon: "mdi-calendar-clock"
+            }, {
+                label: "prices",
+                icon: "mdi-clock"
+            }, {
+                label: "games",
+                icon: "mdi-gamepad-variant"
+            }, {
+                label: "contact",
+                icon: "mdi-phone"
+            },
+            {
+                label: "faq",
+                icon: "mdi-frequently-asked-questions"
+            },
+        ],
         stepperKey: 1000,
         demoMenu: false,
         about: false,
         display: "",
         changeConfig: false,
         changedConfigData: {},
-        amount: 0
+        checkbox: false
     }),
     components: {
         Stepper,
@@ -131,6 +177,7 @@ $color2: var(--v-secondary-base);
     align-items: center;
     display: flex;
     flex-direction: column;
+    max-width: 40rem;
 }
 
 .slogan {
@@ -231,9 +278,15 @@ $color2: var(--v-secondary-base);
 }
 
 .all-content {
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     height: 100%;
+    margin: 0 2rem;
+    display: flex;
+
+    @media (max-width: 1250px) {
+        flex-direction: column;
+    }
 }
 </style>
 <style lang="scss" >
@@ -256,7 +309,7 @@ $color2: var(--v-secondary-base);
     background: white;
 }
 
-.container {
+.stretch-height {
     height: 100%;
 }
 .v-toolbar__content {
