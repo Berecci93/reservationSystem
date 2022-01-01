@@ -42,7 +42,7 @@
                 :rules="priceRules"
                 required
             ></v-text-field>
-            <v-checkbox label="Weekends" v-model="checkbox"></v-checkbox>
+            <v-checkbox label="Weekends" v-model="checkbox" fluid></v-checkbox>
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn
@@ -88,6 +88,7 @@ export default {
             v => !!v || "Value is empty",
             v => (v && v > 0) || "Value cannot be less than 0"
         ],
+        checkbox: false
     }),
 
 

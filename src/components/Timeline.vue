@@ -93,7 +93,7 @@ export default {
 
 <style lang="scss" scoped>
 .active {
-    border: 5px solid var(--v-primary-base);
+    border: 2px solid var(--v-primary-base);
 }
 .timeline {
     max-height: 50vh;

@@ -126,7 +126,7 @@ export default {
                 icon: "mdi-calendar-clock"
             }, {
                 label: "prices",
-                icon: "mdi-clock"
+                icon: "mdi-cash-multiple"
             }, {
                 label: "games",
                 icon: "mdi-gamepad-variant"
