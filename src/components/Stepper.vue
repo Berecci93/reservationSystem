@@ -12,7 +12,12 @@
         <v-stepper-items>
             <v-stepper-content step="1">
                 <!-- date przechowuje info z wybrana data po @input -->
-                <v-date-picker v-model="date" :min="minDate" @input="stepNumber = 2"></v-date-picker>
+                <v-date-picker
+                    :allowed-dates="disallowedWeekends"
+                    v-model="date"
+                    :min="minDate"
+                    @input="stepNumber = 2"
+                ></v-date-picker>
             </v-stepper-content>
             <v-stepper-content step="2">
                 <Timeline
@@ -71,6 +76,12 @@ export default {
             this.savedDates.push({ day: this.date, hour: this.chosenHours })
             localStorage.setItem("reserved", JSON.stringify(this.savedDates))
         },
+        disallowedWeekends(val) {
+            if (this.config.withoutWeekends) {
+                let dayOfWeek = new Date(val).getDay()
+                return dayOfWeek !== 0 && dayOfWeek !== 6
+            } else return true
+        }
 
     },
     created() {

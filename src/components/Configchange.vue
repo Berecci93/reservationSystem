@@ -35,14 +35,14 @@
                 required
             ></v-text-field>
             <v-text-field
-                label="Price for hour (in PLN)"
+                label="Price for one session (in PLN)"
                 placeholder="Price (in PLN)"
                 type="number"
                 v-model.number="configData.price"
                 :rules="priceRules"
                 required
             ></v-text-field>
-            <v-checkbox label="Weekends" v-model="checkbox" fluid></v-checkbox>
+            <v-checkbox label="No Weekends" v-model="configData.withoutWeekends" fluid></v-checkbox>
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn

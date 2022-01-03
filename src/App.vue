@@ -1,6 +1,7 @@
 <template >
     <v-app>
         <v-app-bar app elevation="2" color="primary" rounded>
+            <v-icon>mdi-vuejs</v-icon>
             <v-spacer></v-spacer>
 
             <v-menu
@@ -118,7 +119,8 @@ export default {
             end: 20,
             breakLength: 15,
             sessionLength: 60,
-            price: 100
+            price: 100,
+            withoutWeekends: true
         },
         btns: [
             {
@@ -145,7 +147,7 @@ export default {
         display: "",
         changeConfig: false,
         changedConfigData: {},
-        checkbox: false
+
     }),
     components: {
         Stepper,
