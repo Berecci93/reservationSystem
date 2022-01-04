@@ -4,12 +4,7 @@
             <v-icon>mdi-vuejs</v-icon>
             <v-spacer></v-spacer>
 
-            <v-menu
-                v-if="$vuetify.breakpoint.smAndDown"
-                transition="slide-y-transition"
-                bottom
-                left
-            >
+            <v-menu v-if="$vuetify.breakpoint.smAndDown" transition="slide-y-transition" bottom>
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn dark icon v-bind="attrs" v-on="on">
                         <v-icon>mdi-menu</v-icon>
@@ -18,7 +13,12 @@
 
                 <v-list style="background-color: #272727" dark>
                     <v-list-item v-for="item in btns" :key="item.label" link>
-                        <v-btn block @click="display = item.label">
+                        <v-btn
+                            block
+                            @click="display = item.label"
+                            :disabled="display == item.label"
+                            class="nav-btn"
+                        >
                             <v-icon>{{ item.icon }}</v-icon>
                             <span class="mx-2">{{ item.label }}</span>
                         </v-btn>
@@ -29,9 +29,10 @@
             <v-btn
                 v-for="item in btns"
                 :key="item.label"
-                class="mx-3"
+                class="mx-3 nav-btn"
                 @click="display = item.label"
                 v-else
+                :disabled="display == item.label"
             >
                 <v-icon>{{ item.icon }}</v-icon>
                 <span class="mx-2">{{ item.label }}</span>
@@ -144,7 +145,7 @@ export default {
         stepperKey: 1000,
         demoMenu: false,
         about: false,
-        display: "",
+        display: "games",
         changeConfig: false,
         changedConfigData: {},
 
@@ -327,5 +328,9 @@ $color2: var(--v-secondary-base);
 
 body {
     background-color: #121212;
+}
+
+.nav-btn.theme--dark.v-btn.v-btn--disabled.v-btn--has-bg {
+    background-color: #333 !important;
 }
 </style>

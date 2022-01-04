@@ -16,7 +16,10 @@
 
 ## Demo
 
-to do
+### https://berecci93.github.io/reservations/
+<br>
+
+[![preview](https://berecci93.github.io/resources/reservations-demo.png)](https://berecci93.github.io/reservations/)
 
 ## Tech
 

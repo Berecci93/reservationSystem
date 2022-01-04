@@ -11,13 +11,14 @@
         </v-stepper-header>
         <v-stepper-items>
             <v-stepper-content step="1">
-                <!-- date przechowuje info z wybrana data po @input -->
-                <v-date-picker
-                    :allowed-dates="disallowedWeekends"
-                    v-model="date"
-                    :min="minDate"
-                    @input="stepNumber = 2"
-                ></v-date-picker>
+                <div class="div-date-picker">
+                    <v-date-picker
+                        :allowed-dates="disallowedWeekends"
+                        v-model="date"
+                        :min="minDate"
+                        @input="stepNumber = 2"
+                    ></v-date-picker>
+                </div>
             </v-stepper-content>
             <v-stepper-content step="2">
                 <Timeline
@@ -93,4 +94,9 @@ export default {
 
 </script>
 <style lang="scss" scoped>
+.div-date-picker {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
 </style>
