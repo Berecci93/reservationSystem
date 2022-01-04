@@ -169,6 +169,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import "~vuetify/src/styles/settings/_variables";
+
 $color1: var(--v-primary-base);
 $color2: var(--v-secondary-base);
 
@@ -290,9 +292,15 @@ $color2: var(--v-secondary-base);
     @media (max-width: 1250px) {
         flex-direction: column;
     }
+
+    @media #{map-get($display-breakpoints, 'sm-and-down')} {
+        margin: 0 0.125rem;
+    }
 }
 </style>
 <style lang="scss" >
+@import "~vuetify/src/styles/settings/_variables";
+
 *::-webkit-scrollbar {
     width: 15px;
 }
@@ -332,5 +340,11 @@ body {
 
 .nav-btn.theme--dark.v-btn.v-btn--disabled.v-btn--has-bg {
     background-color: #333 !important;
+}
+
+.v-stepper__content {
+    @media #{map-get($display-breakpoints, 'sm-and-down')} {
+        padding: 1rem 0.125rem !important;
+    }
 }
 </style>

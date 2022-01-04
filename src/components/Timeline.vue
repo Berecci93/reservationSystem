@@ -1,5 +1,5 @@
 <template >
-    <v-container>
+    <div>
         <div>
             <v-timeline dense class="timeline">
                 <v-timeline-item v-for="(item, i) in filteredSessions" :key="i">
@@ -8,7 +8,7 @@
                             block
                             v-bind:class="{ active: item.chosen }"
                             @click="item.chosen = !item.chosen"
-                        >{{ "od " + item.start.hour + ":" + item.start.minutes + " do " + item.end.hour + ":" + item.end.minutes }}</v-btn>
+                        >{{ item.start.hour + ":" + item.start.minutes + " - " + item.end.hour + ":" + item.end.minutes }}</v-btn>
                     </v-card>
                 </v-timeline-item>
             </v-timeline>
@@ -16,11 +16,12 @@
 
         <div class="mt-4">
             <v-btn
-                color="secondary"
+                color="primary"
+                block
                 @click="$emit('hourChosen', filteredChosenSessions), $emit('priceAmount', priceAmount)"
             >Next</v-btn>
         </div>
-    </v-container>
+    </div>
 </template>
 
 <script>

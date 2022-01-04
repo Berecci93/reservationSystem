@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
-import pl from 'vuetify/lib/locale/pl';
+import en from 'vuetify/lib/locale/en';
 
 Vue.use(Vuetify);
 
@@ -34,7 +34,7 @@ export default new Vuetify({
     },
   },
   lang: {
-    locales: { pl },
-    current: 'pl',
+    locales: { en },
+    current: 'en',
   },
 });

@@ -47,8 +47,14 @@
                     ></v-textarea>
                 </v-col>
             </v-row>
-            <v-btn @click="clear" color="error">clear</v-btn>
-            <v-btn @click="submit" color="success" :disabled="!valid">submit</v-btn>
+            <v-row>
+                <v-col>
+                    <v-btn @click="clear" color="error" block>clear</v-btn>
+                </v-col>
+                <v-col>
+                    <v-btn @click="submit" color="success" :disabled="!valid" block>submit</v-btn>
+                </v-col>
+            </v-row>
         </v-container>
     </v-form>
 </template>

@@ -52,7 +52,7 @@
         </v-simple-table>
         <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="success" @click="$emit('clearForm')">Ok</v-btn>
+            <v-btn color="success" @click="$emit('clearForm')" block>Ok</v-btn>
         </v-card-actions>
     </v-card>
 </template>
